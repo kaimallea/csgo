@@ -1,11 +1,10 @@
 #!/bin/bash
 
 export METADATA_URL="${METADATA_URL:-http://metadata.google.internal/computeMetadata/v1/project/attributes}"
-
-export SERVER_HOSTNAME="${SERVER_HOSTNAME:-$(curl '$METADATA_URL/SERVER_HOSTNAME?alt=text' -H 'Metadata-Flavor: Google')}"
-export SERVER_PASSWORD="${SERVER_PASSWORD:-$(curl '$METADATA_URL/SERVER_PASSWORD?alt=text' -H 'Metadata-Flavor: Google')}"
-export RCON_PASSWORD="${RCON_PASSWORD:-$(curl '$METADATA_URL/RCON_PASSWORD?alt=text' -H 'Metadata-Flavor: Google')}"
-export STEAM_ACCOUNT="${STEAM_ACCOUNT:-$(curl '$METADATA_URL/STEAM_ACCOUNT?alt=text' -H 'Metadata-Flavor: Google')}"
+export SERVER_HOSTNAME="${SERVER_HOSTNAME:-$(curl $METADATA_URL'/SERVER_HOSTNAME?alt=text' -H 'Metadata-Flavor: Google')}"
+export SERVER_PASSWORD="${SERVER_PASSWORD:-$(curl $METADATA_URL'/SERVER_PASSWORD?alt=text' -H 'Metadata-Flavor: Google')}"
+export RCON_PASSWORD="${RCON_PASSWORD:-$(curl $METADATA_URL'/RCON_PASSWORD?alt=text' -H 'Metadata-Flavor: Google')}"
+export STEAM_ACCOUNT="${STEAM_ACCOUNT:-$(curl $METADATA_URL'/STEAM_ACCOUNT?alt=text' -H 'Metadata-Flavor: Google')}"
 
 export CSGO_DIR="${CSGO_DIR:-/csgo}"
 
