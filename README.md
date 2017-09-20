@@ -2,8 +2,20 @@
 
 The Dockerfile will build an image for running a Counter-Strike: Global Offensive dedicated server.
 
-It behaves like an executable, so just pass it args. An example to start a classic casual server:
+`start.sh` runs the server when the container starts.
+
+The server matchmaking rules live in `containerfs/csgo/csgo/matchmaking.cfg`.
+
+Run the server in the background:
 
 ```
-docker run -it kmallea/csgo -game csgo -console -usercon +game_type 0 +game_mode 0 +mapgroup mg_bomb +map de_dust2
+	docker run \
+		-d \
+		-P \
+		-e "SERVER_HOSTNAME=test" \
+		-e "SERVER_PASSWORD=test" \
+		-e "RCON_PASSWORD=test" \
+		-e "STEAM_ACCOUNT=$(STEAM_ACCOUNT)" \
 ```
+
+Use `docker ps` to see which ports to use, or use `-p` instead of `-P` to override.
