@@ -1,22 +1,23 @@
-FROM kmallea/steamcmd
+FROM ubuntu:16.04
 
-MAINTAINER Kai Mallea <kmallea@gmail.com>
+ENV LAST_UPDATED_AT 2017-09-19
 
-# Run commands as the steam user
-USER steam
+RUN apt-get update \
+# install dependencies
+    && apt-get install -y lib32gcc1 curl \
+# delete apt cache to save space
+    && rm -rf /var/lib/apt/lists/*
 
-# Install CS:GO
-RUN mkdir /home/steam/csgo &&\
-    cd /home/steam/steamcmd &&\
-    ./steamcmd.sh \
-        +login anonymous \
-        +force_install_dir ../csgo \
-        +app_update 740 validate \
-        +quit
+# extract local steamcmd into image
+ADD steamcmd_linux.tar.gz /steamcmd
 
-# Make server port available to host
-EXPOSE 27015
+# install CSGO
+RUN cd /steamcmd && ./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
 
-# This container will be executable
-WORKDIR /home/steam/csgo
-ENTRYPOINT ["./srcds_run"]
+COPY containerfs /
+
+WORKDIR /csgo
+
+EXPOSE 27015/tcp 27020/tcp 27015/udp 27020/udp
+
+CMD ["./start.sh"]
