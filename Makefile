@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+ 
 IMAGE_NAME ?= csgo-server
 STEAM_ACCOUNT ?= changeme
 
@@ -14,7 +16,10 @@ image: Dockerfile
 run:
 	docker run \
 		-d \
-		-P \
+		-p 27015:27015/tcp \
+		-p 27015:27015/udp \
+		-p 27020:27020/udp \
+		-p 27020:27020/tcp \
 		-e "SERVER_HOSTNAME=test" \
 		-e "SERVER_PASSWORD=test" \
 		-e "RCON_PASSWORD=test" \
