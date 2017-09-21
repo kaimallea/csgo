@@ -18,6 +18,4 @@ COPY containerfs /
 
 WORKDIR /csgo
 
-EXPOSE 27015/tcp 27020/tcp 27015/udp 27020/udp
-
 CMD ["./start.sh"]
