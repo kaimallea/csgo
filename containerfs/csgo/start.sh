@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 
 GOOGLE_METADATA=${GOOGLE_METADATA:-0}
 
