@@ -40,7 +40,7 @@ run:
 		-e "MAP=$(MAP)" \
 		-e "MAPGROUP=$(MAPGROUP)" \
 		-e "MAXPLAYERS=$(MAXPLAYERS)" \
-		--name $(CONTAINER_NAME)" \
+		--name $(CONTAINER_NAME) \
 		$(IMAGE_NAME)
 
 stop:
