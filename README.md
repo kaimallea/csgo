@@ -18,17 +18,17 @@ To use the image as-is, run it with a few useful environment variables to config
 
 ```bash
 docker run \
-	--rm \
+  --rm \
   --interactive \
-	--tty \
-	--detach \
-	--network=host \
-	--env "SERVER_HOSTNAME=hostname" \
-	--env "SERVER_PASSWORD=password" \
-	--env "RCON_PASSWORD=rconpassword" \
-	--env "STEAM_ACCOUNT=gamelogintoken" \
-	--env "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:0:654321" \
-	kmallea/csgo
+  --tty \
+  --detach \
+  --network=host \
+  --env "SERVER_HOSTNAME=hostname" \
+  --env "SERVER_PASSWORD=password" \
+  --env "RCON_PASSWORD=rconpassword" \
+  --env "STEAM_ACCOUNT=gamelogintoken" \
+  --env "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:0:654321" \
+  kmallea/csgo
 ```
 
 ### Required Game Login Token
@@ -73,20 +73,20 @@ If you're unable to use [`--network=host`](https://docs.docker.com/network/host/
 
 ```bash
 docker run \
-	--rm \
+  --rm \
   --interactive \
-	--tty \
-	--detach \
-	--publish 27015:27015/tcp \
-	--publish 27015:27015/udp \
-	--publish 27020:27020/tcp \
-	--publish 27020:27020/udp \
-	--env "SERVER_HOSTNAME=hostname" \
-	--env "SERVER_PASSWORD=password" \
-	--env "RCON_PASSWORD=rconpassword" \
-	--env "STEAM_ACCOUNT=gamelogintoken" \
-	--env "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:0:654321" \
-	kmallea/csgo
+  --tty \
+  --detach \
+  --publish 27015:27015/tcp \
+  --publish 27015:27015/udp \
+  --publish 27020:27020/tcp \
+  --publish 27020:27020/udp \
+  --env "SERVER_HOSTNAME=hostname" \
+  --env "SERVER_PASSWORD=password" \
+  --env "RCON_PASSWORD=rconpassword" \
+  --env "STEAM_ACCOUNT=gamelogintoken" \
+  --env "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:0:654321" \
+  kmallea/csgo
 ```
 
 ## Manually Building
@@ -109,12 +109,12 @@ You can pass build arguments to override the URLs used to fetch SteamCmd, Metamo
 
 ```bash
 docker build \
-	-t $(IMAGE_NAME) \
-	--build-arg steamcmd_url=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-	--build-arg metamod_url=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
-	--build-arg sourcemod_url=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
-	--build-arg pug_setup_plugin_url=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
-	.
+  -t $(IMAGE_NAME) \
+  --build-arg steamcmd_url=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+  --build-arg metamod_url=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
+  --build-arg sourcemod_url=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
+  --build-arg pug_setup_plugin_url=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
+  .
 ```
 
 ### Adding your own configs, addons, plugins, etc.

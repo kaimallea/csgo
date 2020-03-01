@@ -37,7 +37,7 @@ image: Dockerfile
 
 test:
 	docker run \
-	  -i \
+		-i \
 		-t \
 		-d \
 		--net=host \

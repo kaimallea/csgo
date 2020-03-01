@@ -4,13 +4,13 @@ ENV LAST_UPDATED_AT 2020-03-01
 
 # Install dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -yq \
-	lib32gcc1 \
-	lib32stdc++6 \
-	ca-certificates \
-	locales \
-	unzip \
+  lib32gcc1 \
+  lib32stdc++6 \
+  ca-certificates \
+  locales \
+  unzip \
   && rm -rf /var/lib/apt/lists/* \
-	&& locale-gen "en_US.UTF-8"
+  && locale-gen "en_US.UTF-8"
 
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
@@ -29,8 +29,8 @@ RUN tar -zxvf steamcmd_linux.tar.gz && rm steamcmd_linux.tar.gz
 # Patch the following error:
 # /home/steam/.steam/sdk32/steamclient.so: cannot open shared object file: No such file or directory
 RUN	mkdir -p /home/steam/.steam/sdk32 \
-	&& ln -s /home/steam/steamcmd/linux32/steamclient.so /home/steam/.steam/sdk32/steamclient.so
-	
+  && ln -s /home/steam/steamcmd/linux32/steamclient.so /home/steam/.steam/sdk32/steamclient.so
+  
 # Install CSGO
 ENV CSGO_DIR=/home/steam/csgo
 RUN ./steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update 740 validate +quit
