@@ -29,10 +29,10 @@ clean:
 image: Dockerfile
 	docker build \
 		-t $(IMAGE_NAME) \
-		--build-arg steamcmd_url=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-		--build-arg metamod_url=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
-		--build-arg sourcemod_url=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
-		--build-arg pug_setup_plugin_url=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
+		--build-arg STEAMCMD_URL=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+		--build-arg METAMOD_PLUGIN_URL=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
+		--build-arg SOURCEMOD_PLUGIN_URL=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
+		--build-arg PUGSETUP_PLUGIN_URL=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
 		.
 
 test:
@@ -41,6 +41,7 @@ test:
 		-t \
 		-d \
 		--net=host \
+		--mount source=csgo-data,target=/home/steam/csgo/csgo \
 		-e "SERVER_HOSTNAME=$(SERVER_HOSTNAME)" \
 		-e "SERVER_PASSWORD=$(SERVER_PASSWORD)" \
 		-e "RCON_PASSWORD=$(RCON_PASSWORD)" \
