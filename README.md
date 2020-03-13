@@ -22,6 +22,7 @@ docker run \
   --interactive \
   --tty \
   --detach \
+  --mount source=csgo-data,target=/home/steam/csgo/csgo \
   --network=host \
   --env "SERVER_HOSTNAME=hostname" \
   --env "SERVER_PASSWORD=password" \
@@ -77,6 +78,7 @@ docker run \
   --interactive \
   --tty \
   --detach \
+  --mount source=csgo-data,target=/home/steam/csgo/csgo \
   --publish 27015:27015/tcp \
   --publish 27015:27015/udp \
   --publish 27020:27020/tcp \
@@ -101,7 +103,7 @@ _OR_
 make
 ```
 
-The game is ~26GB, so the initial build will take a bit to download depending on your download speed. Subsequent builds on the same machine should take only a few seconds, assuming the initial build image was cached by docker.
+The game data is downloaded on first run (~26GB). Mount a volume from the host to preserve game data if you need to recreate the container. The volume target is `/home/steam/csgo/csgo`.
 
 ### Overriding versions of SteamCMD, Metamod, SourceMod, and/or PugSetup
 
@@ -110,10 +112,10 @@ You can pass build arguments to override the URLs used to fetch SteamCmd, Metamo
 ```bash
 docker build \
   -t $(IMAGE_NAME) \
-  --build-arg steamcmd_url=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-  --build-arg metamod_url=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
-  --build-arg sourcemod_url=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
-  --build-arg pug_setup_plugin_url=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
+  --build-arg STEAMCMD_URL=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+  --build-arg METAMOD_PLUGIN_URL=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
+  --build-arg SOURCEMOD_PLUGIN_URL=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
+  --build-arg PUGSETUP_PLUGIN_URL=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
   .
 ```
 
@@ -128,4 +130,4 @@ For example, by default, CSGO is installed in the root path `/home/steam/csgo` w
 After building:
 
 1. Edit the exported environment variables in the `Makefile` to your liking
-2. Run `make test` to start a local server
+2. Run `make test` to start a local LAN server to test
