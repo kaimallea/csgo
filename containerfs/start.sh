@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-# These two envvars should've been set by the Dockerfile
+# These envvars should've been set by the Dockerfile
 # If they're not set then something went wrong during the build
+: ${STEAM_DIR:?"ERROR: STEAM_DIR IS NOT SET!"}
 : ${STEAMCMD_DIR:?"ERROR: STEAMCMD_DIR IS NOT SET!"}
+: ${CSGO_APP_ID:?"ERROR: CSGO_APP_ID IS NOT SET!"}
 : ${CSGO_DIR:?"ERROR: CSGO_DIR IS NOT SET!"}
 
 export SERVER_HOSTNAME="${SERVER_HOSTNAME:-Counter-Strike: Global Offensive Dedicated Server}"
@@ -24,7 +26,7 @@ export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
 
 # Attempt to update CSGO before starting the server
 cd ${STEAMCMD_DIR}
-./steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update 740 validate +quit
+./steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update ${CSGO_APP_ID} +quit
 
 cd ${CSGO_DIR}
 
@@ -64,19 +66,22 @@ for id in "${STEAMIDS[@]}"; do
 done
 
 # Start the server
-./srcds_run \
-    -console \
-    -usercon \
-    -game csgo \
-    -tickrate $TICKRATE \
-    -port $PORT \
-    -tv_port $TV_PORT \
-    -net_port_try 1 \
-    -maxplayers_override $MAXPLAYERS \
-    +game_type $GAME_TYPE \
-    +game_mode $GAME_MODE \
-    +mapgroup $MAPGROUP \
-    +map $MAP \
-    +ip $IP \
-    +sv_setsteamaccount $STEAM_ACCOUNT \
-    +sv_lan $LAN
+exec ./srcds_run \
+        -console \
+        -usercon \
+        -game csgo \
+        -autoupdate \
+        -steam_dir $STEAM_DIR \
+        -steamcmd_script $CSGO_DIR/autoupdate_script.txt
+        -tickrate $TICKRATE \
+        -port $PORT \
+        -tv_port $TV_PORT \
+        -net_port_try 1 \
+        -maxplayers_override $MAXPLAYERS \
+        +game_type $GAME_TYPE \
+        +game_mode $GAME_MODE \
+        +mapgroup $MAPGROUP \
+        +map $MAP \
+        +ip $IP \
+        +sv_setsteamaccount $STEAM_ACCOUNT \
+        +sv_lan $LAN
