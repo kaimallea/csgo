@@ -1,6 +1,5 @@
 FROM ubuntu:bionic
 
-ENV LANG C.UTF-8
 ENV TERM xterm
 
 ENV STEAM_DIR /home/steam
@@ -22,8 +21,11 @@ RUN set -xo pipefail \
           lib32gcc1 \
           lib32stdc++6 \
           ca-certificates \
+          net-tools \
+          locales \
           unzip \
           curl \
+      && locale-gen en_US.UTF-8 \
       && adduser --disabled-password --gecos "" steam \
       && mkdir ${STEAMCMD_DIR} \
       && cd ${STEAMCMD_DIR} \
@@ -45,17 +47,19 @@ RUN set -xo pipefail \
       && curl -sSL -o pugsetup.zip ${PUGSETUP_PLUGIN_URL} \
       && unzip -q pugsetup.zip -d ${CSGO_DIR}/csgo \
       && rm pugsetup.zip \
-      && curl -sSLO ${ENTRYPOINT_SCRIPT_URL} \
-      && chmod +x start.sh \
       && chown -R steam:steam ${STEAM_DIR} \
       && apt-get remove -y curl unzip \
       && apt-get autoremove -y \
       && rm -rf /var/lib/apt/lists/*
 
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
+
 COPY --chown=steam:steam containerfs ${CSGO_DIR}/
 
 WORKDIR ${CSGO_DIR}
 USER steam
-VOLUME ${CSGO_DIR}/csgo
+VOLUME ${CSGO_DIR}
 
 ENTRYPOINT ["./start.sh"]

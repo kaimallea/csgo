@@ -41,7 +41,7 @@ test:
 		-t \
 		-d \
 		--net=host \
-		--mount source=csgo-data,target=/home/steam/csgo/csgo \
+		--mount source=csgo-data,target=/home/steam/csgo \
 		-e "SERVER_HOSTNAME=$(SERVER_HOSTNAME)" \
 		-e "SERVER_PASSWORD=$(SERVER_PASSWORD)" \
 		-e "RCON_PASSWORD=$(RCON_PASSWORD)" \
