@@ -71,7 +71,7 @@ exec ./srcds_run \
         -usercon \
         -game csgo \
         -autoupdate \
-        -steam_dir $STEAM_DIR \
+        -steam_dir $STEAMCMD_DIR \
         -steamcmd_script $CSGO_DIR/autoupdate_script.txt
         -tickrate $TICKRATE \
         -port $PORT \
