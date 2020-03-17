@@ -103,7 +103,7 @@ _OR_
 make
 ```
 
-The game data is downloaded on first run (~26GB). Mount a volume from the host to preserve game data if you need to recreate the container. The volume target is `/home/steam/csgo`.
+The game data is downloaded on first run (~26GB). Mount a data volume (not a bind volume) to preserve game data if you need to recreate the container. The volume target is `/home/steam/csgo`.
 
 ### Overriding versions of SteamCMD, Metamod, SourceMod, and/or PugSetup
 
