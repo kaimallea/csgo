@@ -47,8 +47,6 @@ RUN set -xo pipefail \
       && curl -sSL -o pugsetup.zip ${PUGSETUP_PLUGIN_URL} \
       && unzip -q pugsetup.zip -d ${CSGO_DIR}/csgo \
       && rm pugsetup.zip \
-      && curl -sSLO ${ENTRYPOINT_SCRIPT_URL} \
-      && chmod +x start.sh \
       && chown -R steam:steam ${STEAM_DIR} \
       && apt-get remove -y curl unzip \
       && apt-get autoremove -y \
