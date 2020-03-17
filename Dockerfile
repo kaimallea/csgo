@@ -60,6 +60,6 @@ COPY --chown=steam:steam containerfs ${CSGO_DIR}/
 
 WORKDIR ${CSGO_DIR}
 USER steam
-VOLUME ${CSGO_DIR}/csgo
+VOLUME ${CSGO_DIR}
 
 ENTRYPOINT ["./start.sh"]

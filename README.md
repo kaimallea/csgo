@@ -22,7 +22,7 @@ docker run \
   --interactive \
   --tty \
   --detach \
-  --mount source=csgo-data,target=/home/steam/csgo/csgo \
+  --mount source=csgo-data,target=/home/steam/csgo \
   --network=host \
   --env "SERVER_HOSTNAME=hostname" \
   --env "SERVER_PASSWORD=password" \
@@ -78,7 +78,7 @@ docker run \
   --interactive \
   --tty \
   --detach \
-  --mount source=csgo-data,target=/home/steam/csgo/csgo \
+  --mount source=csgo-data,target=/home/steam/csgo \
   --publish 27015:27015/tcp \
   --publish 27015:27015/udp \
   --publish 27020:27020/tcp \
@@ -103,7 +103,7 @@ _OR_
 make
 ```
 
-The game data is downloaded on first run (~26GB). Mount a volume from the host to preserve game data if you need to recreate the container. The volume target is `/home/steam/csgo/csgo`.
+The game data is downloaded on first run (~26GB). Mount a volume from the host to preserve game data if you need to recreate the container. The volume target is `/home/steam/csgo`.
 
 ### Overriding versions of SteamCMD, Metamod, SourceMod, and/or PugSetup
 
