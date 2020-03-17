@@ -1,6 +1,5 @@
 FROM ubuntu:bionic
 
-ENV LANG C.UTF-8
 ENV TERM xterm
 
 ENV STEAM_DIR /home/steam
@@ -22,8 +21,11 @@ RUN set -xo pipefail \
           lib32gcc1 \
           lib32stdc++6 \
           ca-certificates \
+          net-tools \
+          locales \
           unzip \
           curl \
+      && locale-gen en_US.UTF-8 \
       && adduser --disabled-password --gecos "" steam \
       && mkdir ${STEAMCMD_DIR} \
       && cd ${STEAMCMD_DIR} \
@@ -51,6 +53,10 @@ RUN set -xo pipefail \
       && apt-get remove -y curl unzip \
       && apt-get autoremove -y \
       && rm -rf /var/lib/apt/lists/*
+
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
 
 COPY --chown=steam:steam containerfs ${CSGO_DIR}/
 
