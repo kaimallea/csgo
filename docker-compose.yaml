@@ -1,0 +1,39 @@
+version: "3.7"
+
+volumes:
+  csgo-data:
+    name: csgo-data
+
+services:
+  csgo:
+    image: kmallea/csgo:latest
+    container_name: csgo-ds
+
+    environment:
+      SERVER_HOSTNAME: "Counter-Strike: Global Offensive Dedicated Server"
+      SERVER_PASSWORD:
+      RCON_PASSWORD: changeme
+      STEAM_ACCOUNT: changeme
+      SOURCEMOD_ADMINS: comma,delimited,list,of,steam,ids
+      IP: 0.0.0.0
+      PORT: 27015
+      TV_PORT: 27020
+      TICKRATE: 128
+      GAME_TYPE: 0
+      GAME_MODE: 1
+      MAP: de_dust2
+      MAPGROUP: mg_active
+      MAXPLAYERS: 12
+      TV_ENABLE: 1
+      LAN: 0
+
+    volumes:
+      - type: volume
+        source: csgo-data
+        target: /home/steam/csgo
+
+    network_mode: "host"
+
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
