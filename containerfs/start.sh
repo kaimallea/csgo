@@ -77,11 +77,11 @@ exec ./srcds_run \
         -port $PORT \
         -tv_port $TV_PORT \
         -net_port_try 1 \
+        -ip $IP \
         -maxplayers_override $MAXPLAYERS \
         +game_type $GAME_TYPE \
         +game_mode $GAME_MODE \
         +mapgroup $MAPGROUP \
         +map $MAP \
-        +ip $IP \
         +sv_setsteamaccount $STEAM_ACCOUNT \
         +sv_lan $LAN
