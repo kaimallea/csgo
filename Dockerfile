@@ -33,14 +33,6 @@ RUN set -xo pipefail \
       && mkdir -p ${STEAM_DIR}/.steam/sdk32 \
       && ln -s ${STEAMCMD_DIR}/linux32/steamclient.so ${STEAM_DIR}/.steam/sdk32/steamclient.so \
       && mkdir -p ${CSGO_DIR}/csgo \
-      && { \
-            echo '@ShutdownOnFailedCommand 1'; \
-            echo '@NoPromptForPassword 1'; \
-            echo 'login anonymous'; \
-            echo 'force_install_dir ${CSGO_DIR}'; \
-            echo 'app_update ${CSGO_APP_ID}'; \
-            echo 'quit'; \
-        } > ${CSGO_DIR}/autoupdate_script.txt \
       && cd ${CSGO_DIR}/csgo \
       && curl -sSL ${METAMOD_PLUGIN_URL} | tar -zx -C ${CSGO_DIR}/csgo \
       && curl -sSL ${SOURCEMOD_PLUGIN_URL} | tar -zx -C ${CSGO_DIR}/csgo \
