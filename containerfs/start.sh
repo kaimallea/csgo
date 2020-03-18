@@ -70,6 +70,9 @@ exec ./srcds_run \
         -console \
         -usercon \
         -game csgo \
+        -autoupdate \
+        -steam_dir $STEAMCMD_DIR \
+        -steamcmd_script $CSGO_DIR/autoupdate_script.txt
         -tickrate $TICKRATE \
         -port $PORT \
         -tv_port $TV_PORT \
