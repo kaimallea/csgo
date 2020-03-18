@@ -26,7 +26,7 @@ export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
 
 # Attempt to update CSGO before starting the server
 cd ${STEAMCMD_DIR}
-./steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update ${CSGO_APP_ID} +quit
+./steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update ${CSGO_APP_ID} validate +quit
 
 cd ${CSGO_DIR}
 
