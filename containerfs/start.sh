@@ -15,6 +15,7 @@ export IP="${IP:-0.0.0.0}"
 export PORT="${PORT:-27015}"
 export TV_PORT="${TV_PORT:-27020}"
 export TICKRATE="${TICKRATE:-128}"
+export FPS_MAX="${FPS_MAX:-300}"
 export GAME_TYPE="${GAME_TYPE:-0}"
 export GAME_MODE="${GAME_MODE:-1}"
 export MAP="${MAP:-de_dust2}"
@@ -76,6 +77,7 @@ exec $BASH ${CSGO_DIR}/srcds_run \
         -net_port_try 1 \
         -ip $IP \
         -maxplayers_override $MAXPLAYERS \
+        +fps_max $FPS_MAX \
         +game_type $GAME_TYPE \
         +game_mode $GAME_MODE \
         +mapgroup $MAPGROUP \

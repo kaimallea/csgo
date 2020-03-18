@@ -8,6 +8,8 @@ The following addons and plugins are included by default:
 - [SourceMod](https://www.sourcemod.net/)
 - [PugSetup](https://github.com/splewis/csgo-pug-setup)
 
+This means that you can quickly organize a 10mans/gathers/pug by connecting and typing `.setup` in chat.
+
 ## How to Use
 
 ```bash
@@ -51,13 +53,14 @@ Below are the default values for environment variables that control the server c
 
 ```bash
 SERVER_HOSTNAME=Counter-Strike: Global Offensive Dedicated Server
-SERVER_PASSWORD=changeme
+SERVER_PASSWORD=
 RCON_PASSWORD=changeme
 STEAM_ACCOUNT=changeme
 IP=0.0.0.0
 PORT=27015
 TV_PORT=27020
 TICKRATE=128
+FPS_MAX=300
 GAME_TYPE=0
 GAME_MODE=1
 MAP=de_dust2
