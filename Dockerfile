@@ -32,7 +32,6 @@ RUN set -xo pipefail \
       && curl -sSL ${STEAMCMD_URL} | tar -zx -C ${STEAMCMD_DIR} \
       && mkdir -p ${STEAM_DIR}/.steam/sdk32 \
       && ln -s ${STEAMCMD_DIR}/linux32/steamclient.so ${STEAM_DIR}/.steam/sdk32/steamclient.so \
-      && mkdir -p ${CSGO_DIR}/csgo \
       && { \
             echo '@ShutdownOnFailedCommand 1'; \
             echo '@NoPromptForPassword 1'; \
@@ -40,7 +39,8 @@ RUN set -xo pipefail \
             echo 'force_install_dir ${CSGO_DIR}'; \
             echo 'app_update ${CSGO_APP_ID}'; \
             echo 'quit'; \
-        } > ${CSGO_DIR}/autoupdate_script.txt \
+        } > ${STEAM_DIR}/autoupdate_script.txt \
+      && mkdir -p ${CSGO_DIR}/csgo \
       && cd ${CSGO_DIR}/csgo \
       && curl -sSL ${METAMOD_PLUGIN_URL} | tar -zx -C ${CSGO_DIR}/csgo \
       && curl -sSL ${SOURCEMOD_PLUGIN_URL} | tar -zx -C ${CSGO_DIR}/csgo \
@@ -56,10 +56,9 @@ ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8
 
-COPY --chown=steam:steam containerfs ${CSGO_DIR}/
+COPY --chown=steam:steam containerfs ${STEAM_DIR}/
 
-WORKDIR ${CSGO_DIR}
 USER steam
+WORKDIR ${CSGO_DIR}
 VOLUME ${CSGO_DIR}
-
-ENTRYPOINT ["./start.sh"]
+ENTRYPOINT exec ${STEAM_DIR}/start.sh

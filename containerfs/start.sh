@@ -25,10 +25,7 @@ export LAN="${LAN:-0}"
 export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
 
 # Attempt to update CSGO before starting the server
-cd ${STEAMCMD_DIR}
-./steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update ${CSGO_APP_ID} +quit
-
-cd ${CSGO_DIR}
+${STEAMCMD_DIR}/steamcmd.sh +login anonymous +force_install_dir ${CSGO_DIR} +app_update ${CSGO_APP_ID} +quit
 
 # Create dynamic autoexec config
 cat << AUTOEXECCFG > $CSGO_DIR/csgo/cfg/autoexec.cfg
@@ -66,13 +63,13 @@ for id in "${STEAMIDS[@]}"; do
 done
 
 # Start the server
-exec ./srcds_run \
+exec $BASH ${CSGO_DIR}/srcds_run \
         -console \
         -usercon \
         -game csgo \
         -autoupdate \
         -steam_dir $STEAMCMD_DIR \
-        -steamcmd_script $CSGO_DIR/autoupdate_script.txt \
+        -steamcmd_script $STEAM_DIR/autoupdate_script.txt \
         -tickrate $TICKRATE \
         -port $PORT \
         -tv_port $TV_PORT \

@@ -121,9 +121,9 @@ docker build \
 
 ### Adding your own configs, addons, plugins, etc.
 
-The directory `containerfs` (container filesystem) is the equivalent of the root CSGO directory. Any files or plugins you want to add, simply put them in the correct paths under `containerfs`, and they will appear in the Docker image relative to the CSGO directory.
+The directory `containerfs` (container filesystem) is the equivalent of the steam user's home directory (`/home/steam`). The `csgo` game data lives in here. This means that any files or plugins you want to add, simply put them in the correct paths under `containerfs`, and they will appear in the Docker image relative to the steam user's home directory.
 
-For example, by default, CSGO is installed in the root path `/home/steam/csgo` within the docker image. I want my `practice.cfg` file to live in the `cfg` directory, so I put that file in `containerfs/csgo/cfg/` and it will appear in the right place inside the docker image (`home/steam/csgo/csgo/cfg/practice.cfg`).
+For example, by default, CSGO is installed to `/home/steam/csgo` within the docker image. I want my `practice.cfg` file to live in the `cfg` directory, so I put that file in `containerfs/csgo/csgo/cfg/` and it will appear in the right place inside the docker image (`/home/steam/csgo/csgo/cfg/practice.cfg`).
 
 ### Test Locally
 
