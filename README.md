@@ -40,6 +40,10 @@ docker run \
   kmallea/csgo
 ```
 
+Would you rather use a bind volume so that you can access file contents directly? Use `--mount type=bind,source=$(pwd),target=/home/steam/csgo` instead of the one in the example above.
+
+If you plan on managing plugins manually with a bind volume, you might want pass an empty or reduced `INSTALL_PLUGINS` environment variable to prevent conflicts (see below for default value of `INSTALL_PLUGINS`).
+
 ### Required Game Login Token
 
 The `STEAM_ACCOUNT` is a "Game Login Token" required by Valve to run public servers. Confusingly, this token is also referred to as a steam account (it's set via `sv_setsteamaccount`). To get one, visit https://steamcommunity.com/dev/managegameservers. You'll need one for each server.
