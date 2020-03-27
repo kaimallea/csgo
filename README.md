@@ -7,8 +7,14 @@ The following addons and plugins are included by default:
 - [Metamod](https://www.sourcemm.net/)
 - [SourceMod](https://www.sourcemod.net/)
 - [PugSetup](https://github.com/splewis/csgo-pug-setup)
+- [Retakes](https://github.com/splewis/csgo-retakes)
+
+PugSetup is enabled by default.
+Retakes is disabled by default.
 
 This means that you can quickly organize a 10mans/gathers/pug by connecting and typing `.setup` in chat.
+
+To enable Retakes and disable PugSetup, set the environment variable `RETAKES=1` prior to starting the container.
 
 ## How to Use
 
@@ -69,6 +75,7 @@ MAXPLAYERS=12
 TV_ENABLE=1
 LAN=0
 SOURCEMOD_ADMINS=
+RETAKES=0
 ```
 
 ### Troubleshooting
@@ -106,27 +113,55 @@ _OR_
 make
 ```
 
-The game data is downloaded on first run (~26GB). Mount a data volume (not a bind volume) to preserve game data if you need to recreate the container. The volume target is `/home/steam/csgo`.
+The game data is downloaded on first run (~26GB). Mount a volume to preserve game data if you need to recreate the container. The volume's target should be `/home/steam/csgo`. In these example I use a data volume, but you can use a bind volume as well since plugins are installed during container startup.
 
 ### Overriding versions of SteamCMD, Metamod, SourceMod, and/or PugSetup
 
-You can pass build arguments to override the URLs used to fetch SteamCmd, Metamod, SourceMod, PugSetup:
+#### SteamCMD
+
+SteamCMD is installed directly into the image at build time. To override the URL it installs from, pass in a build arg named `STEAMCMD_URL`:
 
 ```bash
 docker build \
   -t $(IMAGE_NAME) \
   --build-arg STEAMCMD_URL=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-  --build-arg METAMOD_PLUGIN_URL=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
-  --build-arg SOURCEMOD_PLUGIN_URL=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6474-linux.tar.gz \
-  --build-arg PUGSETUP_PLUGIN_URL=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
   .
 ```
 
-### Adding your own configs, addons, plugins, etc.
+#### Metamod, SourceMod, PugSetup, Retakes, etc
 
-The directory `containerfs` (container filesystem) is the equivalent of the steam user's home directory (`/home/steam`). The `csgo` game data lives in here. This means that any files or plugins you want to add, simply put them in the correct paths under `containerfs`, and they will appear in the Docker image relative to the steam user's home directory.
+All plugins and extensions are installed during the startup of the container. This allows plugins can be managed via an environment variable.
 
-For example, by default, CSGO is installed to `/home/steam/csgo` within the docker image. I want my `practice.cfg` file to live in the `cfg` directory, so I put that file in `containerfs/csgo/csgo/cfg/` and it will appear in the right place inside the docker image (`/home/steam/csgo/csgo/cfg/practice.cfg`).
+The environment variable `INSTALL_PLUGINS` contains a space-delimited list of plugins to install. You can use newlines to delimit, they will be converted to spaces before processing. If you override this, make sure you include metamod and sourcemod or plugins that depend on them won't work.
+
+```bash
+INSTALL_PLUGINS="${INSTALL_PLUGINS:-https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz
+https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6478-linux.tar.gz
+https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip
+https://github.com/splewis/csgo-retakes/releases/download/v0.3.4/retakes_0.3.4.zip
+https://github.com/b3none/retakes-instadefuse/releases/download/1.4.0/retakes-instadefuse.smx
+https://github.com/b3none/retakes-autoplant/releases/download/2.3.0/retakes_autoplant.smx
+https://github.com/b3none/retakes-hud/releases/download/2.2.5/retakes-hud.smx
+}"
+```
+
+Lastly, a checksum is generated for each plugin's URL and is stored as `$CSGO_DIR/csgo/<checksum>.marker` to prevent re-downloading plugins that have already been installed.
+
+### Adding your own configs, other files etc.
+
+#### Build time
+
+The directory `containerfs` (container filesystem) is the equivalent of the steam user's home directory (`/home/steam`). The `csgo` game data lives in here. This means that any files you want to add, simply put them in the correct paths under `containerfs`, and they will appear in the Docker image relative to the steam user's home directory.
+
+It is recommended to use `INSTALL_PLUGINS` environment variable at run time to install plugins, so that they are decoupled from the image.
+
+#### Run time
+
+See `INSTALL_PLUGINS` above in the section above to learn about installing plugins.
+
+If you're using a data volume, you can use the `docker cp` command to copy files from your host machine into the data volume.
+
+If you're using a bind volume, you can copy files in directly. You may want to clear the `INSTALL_PLUGINS` variable if you want to manage everything manually.
 
 ### Test Locally
 
