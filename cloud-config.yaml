@@ -1,0 +1,58 @@
+#cloud-config
+
+# This config is an example of of a one-liner to getting a CSGO server up-and-running
+# in just a few minutes on Google Compute Engine with the following one-liner that consumes
+# the uncommented parts of this file:
+#
+# gcloud compute instances create csgo-server \
+#     --project=$PROJECT \
+#     --zone=$ZONE \
+#     --image-family=cos-stable \
+#     --image-project=cos-cloud \
+#     --boot-disk-size=50GB \
+#     --machine-type=c2-standard-4 \
+#     --network=default \
+#     --metadata-from-file user-data=$(PWD)/cloud-config.yaml
+
+write_files:
+- path: /etc/systemd/system/csgods.service
+  permissions: 0644
+  owner: root
+  content: |
+    [Unit]
+    Description=CSGO Dedicated Server Container
+    After=docker.service
+    Requires=docker.service
+
+    [Service]
+    StandardInput=tty-force
+    ExecStartPre=/usr/bin/docker pull kmallea/csgo
+    ExecStart=/usr/bin/docker run --name %n \
+                                  --interactive \
+                                  --tty \
+                                  --rm \
+                                  --network host \
+                                  --cpuset-cpus 3 \
+                                  --mount source=csgo-data,target=/home/steam/csgo \
+                                  -e "SERVER_HOSTNAME=Counter-Strike: Global Offensive Dedicated Server" \
+                                  -e "SERVER_PASSWORD=" \
+                                  -e "RCON_PASSWORD=changeme" \
+                                  -e "STEAM_ACCOUNT=changeme" \
+                                  -e "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:1:654321" \
+                                  -e "FPS_MAX=1000" \
+                                  kmallea/csgo
+    ExecStop=-/usr/bin/docker stop %n
+    ExecStopPost=-/usr/bin/docker rm %n
+
+runcmd:
+- iptables -w -A INPUT -p tcp --dport 27015 -j ACCEPT
+- iptables -w -A INPUT -p udp --dport 27015 -j ACCEPT
+- iptables -w -A INPUT -p tcp --dport 27020 -j ACCEPT
+- iptables -w -A INPUT -p udp --dport 27020 -j ACCEPT
+- iptables -w -A INPUT -p udp --dport 27005 -j ACCEPT
+- iptables -w -A INPUT -p udp --dport 51840 -j ACCEPT
+- iptables -w -A INPUT -p tcp --dport 26900 -j ACCEPT
+- iptables -w -A INPUT -p tcp --dport 80 -j ACCEPT
+- iptables -w -A INPUT -p tcp --dport 443 -j ACCEPT
+- systemctl daemon-reload
+- systemctl start csgods.service

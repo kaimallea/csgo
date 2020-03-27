@@ -19,6 +19,7 @@ MAXPLAYERS ?= 12
 TV_ENABLE ?= 1
 LAN ?= 1
 SOURCEMOD_ADMINS ?= changeme
+RETAKES ?= 0
 
 .PHONY: all clean image test stop
 
@@ -28,13 +29,9 @@ clean:
 	docker rmi $(IMAGE_NAME)
 
 image: Dockerfile
-	docker build \
-		-t $(IMAGE_NAME) \
-		--build-arg STEAMCMD_URL=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-		--build-arg METAMOD_PLUGIN_URL=https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz \
-		--build-arg SOURCEMOD_PLUGIN_URL=https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6478-linux.tar.gz \
-		--build-arg PUGSETUP_PLUGIN_URL=https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip \
-		.
+	docker build -t $(IMAGE_NAME) \
+	--build-arg STEAMCMD_URL=https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+	.
 
 test:
 	docker run \
@@ -57,6 +54,7 @@ test:
 		-e "TV_ENABLE=$(TV_ENABLE)" \
 		-e "LAN=$(LAN)" \
 		-e "SOURCEMOD_ADMINS=$(SOURCEMOD_ADMINS)" \
+		-e "RETAKES=$(RETAKES)" \
 		--name $(CONTAINER_NAME) \
 		$(IMAGE_NAME)
 
