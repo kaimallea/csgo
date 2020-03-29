@@ -36,6 +36,7 @@ RUN set -xo pipefail \
             echo 'app_update ${CSGO_APP_ID}'; \
             echo 'quit'; \
         } > ${STEAM_DIR}/autoupdate_script.txt \
+      && mkdir ${CSGO_DIR} \
       && chown -R steam:steam ${STEAM_DIR} \
       && rm -rf /var/lib/apt/lists/*
 
