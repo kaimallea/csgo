@@ -36,6 +36,7 @@ docker run \
   --env "SERVER_PASSWORD=password" \
   --env "RCON_PASSWORD=rconpassword" \
   --env "STEAM_ACCOUNT=gamelogintoken" \
+  --env "AUTHKEY=webapikey" \
   --env "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:0:654321" \
   kmallea/csgo
 ```
@@ -47,6 +48,12 @@ If you plan on managing plugins manually with a bind volume, you might want pass
 ### Required Game Login Token
 
 The `STEAM_ACCOUNT` is a "Game Login Token" required by Valve to run public servers. Confusingly, this token is also referred to as a steam account (it's set via `sv_setsteamaccount`). To get one, visit https://steamcommunity.com/dev/managegameservers. You'll need one for each server.
+
+### Optional Steam Web API Key
+
+To access maps and collections from the Workshop, you need to provide a Steam Web API key. You can provide this via the evironment variable `AUTHKEY` and it will be passed to the command-line as `-authkey <key>`.
+
+If you don't have a key you can generate one at http://steamcommunity.com/dev/apikey.
 
 ### SourceMod admins
 
@@ -66,6 +73,7 @@ SERVER_HOSTNAME=Counter-Strike: Global Offensive Dedicated Server
 SERVER_PASSWORD=
 RCON_PASSWORD=changeme
 STEAM_ACCOUNT=changeme
+AUTHKEY=changeme
 IP=0.0.0.0
 PORT=27015
 TV_PORT=27020
@@ -101,6 +109,7 @@ docker run \
   --env "SERVER_PASSWORD=password" \
   --env "RCON_PASSWORD=rconpassword" \
   --env "STEAM_ACCOUNT=gamelogintoken" \
+  --env "AUTHKEY=webapikey" \
   --env "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:0:654321" \
   kmallea/csgo
 ```

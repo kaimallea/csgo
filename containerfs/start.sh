@@ -11,6 +11,7 @@ export SERVER_HOSTNAME="${SERVER_HOSTNAME:-Counter-Strike: Global Offensive Dedi
 export SERVER_PASSWORD="${SERVER_PASSWORD:-}"
 export RCON_PASSWORD="${RCON_PASSWORD:-changeme}"
 export STEAM_ACCOUNT="${STEAM_ACCOUNT:-changeme}"
+export AUTHKEY="${AUTHKEY:-changeme}"
 export IP="${IP:-0.0.0.0}"
 export PORT="${PORT:-27015}"
 export TV_PORT="${TV_PORT:-27020}"
@@ -67,6 +68,7 @@ exec "$BASH" "$CSGO_DIR/srcds_run" \
         -usercon \
         -game csgo \
         -autoupdate \
+        -authkey "$AUTHKEY" \
         -steam_dir "$STEAMCMD_DIR" \
         -steamcmd_script "$STEAM_DIR/autoupdate_script.txt" \
         -tickrate "$TICKRATE" \

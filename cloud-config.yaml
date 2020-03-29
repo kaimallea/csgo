@@ -39,6 +39,7 @@ write_files:
                                   -e "RCON_PASSWORD=changeme" \
                                   -e "STEAM_ACCOUNT=changeme" \
                                   -e "SOURCEMOD_ADMINS=STEAM_1:0:123456,STEAM_1:1:654321" \
+                                  -e "AUTHKEY=changeme" \
                                   -e "FPS_MAX=1000" \
                                   kmallea/csgo
     ExecStop=-/usr/bin/docker stop %n
