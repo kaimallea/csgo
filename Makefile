@@ -6,6 +6,7 @@ SERVER_HOSTNAME ?= Counter-Strike: Global Offensive Dedicated Server
 SERVER_PASSWORD ?=
 RCON_PASSWORD ?= changeme
 STEAM_ACCOUNT ?= changeme
+AUTHKEY ?= changeme
 IP ?= 0.0.0.0
 PORT ?= 27015
 TV_PORT ?= 27020
@@ -44,6 +45,7 @@ test:
 		-e "SERVER_PASSWORD=$(SERVER_PASSWORD)" \
 		-e "RCON_PASSWORD=$(RCON_PASSWORD)" \
 		-e "STEAM_ACCOUNT=$(STEAM_ACCOUNT)" \
+		-e "AUTHKEY=$(AUTHKEY)" \
 		-e "TICKRATE=$(TICKRATE)" \
 		-e "FPS_MAX=$(FPS_MAX)" \
 		-e "GAME_TYPE=$(GAME_TYPE)" \
