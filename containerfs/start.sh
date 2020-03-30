@@ -73,7 +73,6 @@ exec "$BASH" "$CSGO_DIR/srcds_run" \
         -steamcmd_script "$STEAM_DIR/autoupdate_script.txt" \
         -tickrate "$TICKRATE" \
         -port "$PORT" \
-        -tv_port "$TV_PORT" \
         -net_port_try 1 \
         -ip "$IP" \
         -maxplayers_override "$MAXPLAYERS" \
@@ -83,4 +82,5 @@ exec "$BASH" "$CSGO_DIR/srcds_run" \
         +mapgroup "$MAPGROUP" \
         +map "$MAP" \
         +sv_setsteamaccount "$STEAM_ACCOUNT" \
-        +sv_lan "$LAN"
+        +sv_lan "$LAN" \
+        +tv_port "$TV_PORT"
