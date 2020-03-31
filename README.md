@@ -6,15 +6,16 @@ The following addons and plugins are included by default:
 
 - [Metamod](https://www.sourcemm.net/)
 - [SourceMod](https://www.sourcemod.net/)
+- [SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)
+- [Updater](https://bitbucket.org/GoD_Tony/updater/downloads/updater.smx)
 - [PugSetup](https://github.com/splewis/csgo-pug-setup)
-- [Retakes](https://github.com/splewis/csgo-retakes)
+- [Practice Mode](https://github.com/splewis/csgo-practice-mode)
+- [Retakes](https://github.com/splewis/csgo-retakes) (**disabled by default**)
 
-PugSetup is enabled by default.
-Retakes is disabled by default.
 
-This means that you can quickly organize a 10mans/gathers/pug by connecting and typing `.setup` in chat.
+To get a 10man/gather going, simply connect and type `.setup` in chat. Practice Mode should also be available from the menu.
 
-To enable Retakes and disable PugSetup, set the environment variable `RETAKES=1` prior to starting the container.
+Retakes is disabled by default. To enable it, set the environment variable `RETAKES=1` and restart the container. Use can later use the cvar `sm_retakes_enabled 0` to turn if off on-demand.
 
 ## How to Use
 
