@@ -21,6 +21,8 @@ export GAME_TYPE="${GAME_TYPE:-0}"
 export GAME_MODE="${GAME_MODE:-1}"
 export MAP="${MAP:-de_dust2}"
 export MAPGROUP="${MAPGROUP:-mg_active}"
+export HOST_WORKSHOP_COLLECTION="${HOST_WORKSHOP_COLLECTION:-}"
+export WORKSHOP_START_MAP="${WORKSHOP_START_MAP:-}"
 export MAXPLAYERS="${MAXPLAYERS:-12}"
 export TV_ENABLE="${TV_ENABLE:-1}"
 export LAN="${LAN:-0}"
@@ -62,25 +64,36 @@ SERVERCFG
 # Install and configure plugins & extensions
 "$BASH" "$STEAM_DIR/manage_plugins.sh"
 
+SRCDS_ARGUMENTS=(
+  "-console"
+  "-usercon"
+  "-game csgo"
+  "-autoupdate"
+  "-authkey $AUTHKEY"
+  "-steam_dir $STEAMCMD_DIR"
+  "-steamcmd_script $STEAM_DIR/autoupdate_script.txt"
+  "-tickrate $TICKRATE"
+  "-port $PORT"
+  "-net_port_try 1"
+  "-ip $IP"
+  "-maxplayers_override $MAXPLAYERS"
+  "+fps_max $FPS_MAX"
+  "+game_type $GAME_TYPE"
+  "+game_mode $GAME_MODE"
+  "+mapgroup $MAPGROUP"
+  "+map $MAP"
+  "+sv_setsteamaccount" "$STEAM_ACCOUNT"
+  "+sv_lan $LAN"
+  "+tv_port $TV_PORT"
+)
+
+if [[ -n $HOST_WORKSHOP_COLLECTION ]]; then
+  SRCDS_ARGUMENTS+=("+host_workshop_collection $HOST_WORKSHOP_COLLECTION")
+fi
+
+if [[ -n $WORKSHOP_START_MAP ]]; then
+  SRCDS_ARGUMENTS+=("+workshop_start_map $WORKSHOP_START_MAP")
+fi
+
 # Start the server
-exec "$BASH" "$CSGO_DIR/srcds_run" \
-        -console \
-        -usercon \
-        -game csgo \
-        -autoupdate \
-        -authkey "$AUTHKEY" \
-        -steam_dir "$STEAMCMD_DIR" \
-        -steamcmd_script "$STEAM_DIR/autoupdate_script.txt" \
-        -tickrate "$TICKRATE" \
-        -port "$PORT" \
-        -net_port_try 1 \
-        -ip "$IP" \
-        -maxplayers_override "$MAXPLAYERS" \
-        +fps_max "$FPS_MAX" \
-        +game_type "$GAME_TYPE" \
-        +game_mode "$GAME_MODE" \
-        +mapgroup "$MAPGROUP" \
-        +map "$MAP" \
-        +sv_setsteamaccount "$STEAM_ACCOUNT" \
-        +sv_lan "$LAN" \
-        +tv_port "$TV_PORT"
+exec "$BASH" "$CSGO_DIR/srcds_run" "${SRCDS_ARGUMENTS[@]}"

@@ -50,11 +50,15 @@ If you plan on managing plugins manually with a bind volume, you might want pass
 
 The `STEAM_ACCOUNT` is a "Game Login Token" required by Valve to run public servers. Confusingly, this token is also referred to as a steam account (it's set via `sv_setsteamaccount`). To get one, visit https://steamcommunity.com/dev/managegameservers. You'll need one for each server.
 
-### Optional Steam Web API Key
+### Optional Steam Web API Key for Workshop Content
 
 To access maps and collections from the Workshop, you need to provide a Steam Web API key. You can provide this via the evironment variable `AUTHKEY` and it will be passed to the command-line as `-authkey <key>`.
 
 If you don't have a key you can generate one at http://steamcommunity.com/dev/apikey.
+
+With a key set, you can also use the environment variables `HOST_WORKSHOP_COLLECTION` and `WORKSHOP_START_MAP` to specify a workshop collection and start the server with a workshop map, respectively.
+
+For more information check out the [Valve developer wiki page](https://developer.valvesoftware.com/wiki/CSGO_Workshop_For_Server_Operators#How_to_host_Workshop_Maps_with_a_CS:GO_Dedicated_Server).
 
 ### SourceMod admins
 
@@ -84,6 +88,8 @@ GAME_TYPE=0
 GAME_MODE=1
 MAP=de_dust2
 MAPGROUP=mg_active
+HOST_WORKSHOP_COLLECTION=
+WORKSHOP_START_MAP=
 MAXPLAYERS=12
 TV_ENABLE=1
 LAN=0
