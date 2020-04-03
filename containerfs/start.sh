@@ -95,5 +95,13 @@ if [[ -n $WORKSHOP_START_MAP ]]; then
   SRCDS_ARGUMENTS+=("+workshop_start_map $WORKSHOP_START_MAP")
 fi
 
+SRCDS_RUN="$CSGO_DIR/srcds_run"
+
+# Patch srcds_run to fix autoupdates
+if grep -q 'steam.sh' "$SRCDS_RUN"; then
+  sed -i 's/steam.sh/steamcmd.sh/' "$SRCDS_RUN"
+  echo "Applied patch to srcds_run to fix autoupdates"
+fi
+
 # Start the server
-exec "$BASH" "$CSGO_DIR/srcds_run" "${SRCDS_ARGUMENTS[@]}"
+exec "$BASH" "$SRCDS_RUN" "${SRCDS_ARGUMENTS[@]}"
