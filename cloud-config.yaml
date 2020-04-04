@@ -15,6 +15,42 @@
 #     --metadata-from-file user-data=$(PWD)/cloud-config.yaml
 
 write_files:
+- path: /etc/systemd/system/dynamic-dns.service
+  permissions: 0644
+  owner: root
+  content: |
+    # /etc/systemd/system/dynamic-dns.service
+    [Unit]
+    Description=Updates dynamic DNS record
+    Wants=dynamic-dns.timer
+
+    [Service]
+    ExecStart=/bin/sh -c '(\
+                export PUBLIC_IP=$$(\
+                  /usr/bin/curl \
+                    -s \
+                    -H "Metadata-Flavor: Google" \
+                    https://domains.google.com/checkip \
+                ) && \
+                /usr/bin/curl \
+                  -s \
+                  --user <username>:<password> \
+                  "https://domains.google.com/nic/update?hostname=<hostname>&myip=$${PUBLIC_IP}" \
+              )'
+
+- path: /etc/systemd/system/dynamic-dns.timer
+  permissions: 0644
+  owner: root
+  content: |
+    # /etc/systemd/system/dynamic-dns.timer
+    [Unit]
+    Description=Runs dynamic-dns.service every 15 minutes
+    Requires=dynamic-dns.timer
+
+    [Timer]
+    Unit=dynamic-dns.service
+    OnUnitInactiveSec=15m
+
 - path: /etc/systemd/system/csgods.service
   permissions: 0644
   owner: root
@@ -56,4 +92,6 @@ runcmd:
 - iptables -w -A INPUT -p tcp --dport 80 -j ACCEPT
 - iptables -w -A INPUT -p tcp --dport 443 -j ACCEPT
 - systemctl daemon-reload
+- systemctl enable dynamic-dns.timer
+- systemctl start dynamic-dns.service
 - systemctl start csgods.service
