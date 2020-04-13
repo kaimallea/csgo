@@ -64,6 +64,9 @@ SERVERCFG
 # Install and configure plugins & extensions
 "$BASH" "$STEAM_DIR/manage_plugins.sh"
 
+# Update PugSetup configuration via environment variables
+"$BASH" "$STEAM_DIR/manage_pugsetup_configs.sh"
+
 SRCDS_ARGUMENTS=(
   "-console"
   "-usercon"

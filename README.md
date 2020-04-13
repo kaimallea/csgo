@@ -12,7 +12,6 @@ The following addons and plugins are included by default:
 - [Practice Mode](https://github.com/splewis/csgo-practice-mode)
 - [Retakes](https://github.com/splewis/csgo-retakes) (**disabled by default**)
 
-
 To get a 10man/gather going, simply connect and type `.setup` in chat. Practice Mode should also be available from the menu.
 
 Retakes is disabled by default. To enable it, set the environment variable `RETAKES=1` and restart the container. Use can later use the cvar `sm_retakes_enabled 0` to turn if off on-demand.
@@ -68,7 +67,6 @@ The optional `SOURCEMOD_ADMINS` environment variable is a comma-delimited list o
 
 If you're on a LAN, add the environment variable `LAN=1` (e.g., `--env "LAN=1"`) to have `sv_lan 1` set for you in the server.
 
-
 ### Environment variable overrides
 
 Below are the default values for environment variables that control the server configuration. To override, pass one or more of these to docker using the `-e` or `--env` argument (example above).
@@ -95,6 +93,30 @@ TV_ENABLE=1
 LAN=0
 SOURCEMOD_ADMINS=
 RETAKES=0
+```
+
+### PugSetup ConVars
+
+PugSetup's default configuration can also be controlled via environment variables. Any environment variables prefixed with `SM_PUGSETUP_` will have its corresponding cvar updated inside of `$CSGODIR/csgo/cfg/sourcemod/pugsetup.cfg`.
+
+**NOTE: `pugsetup.cfg` is automatically generated the first time the plugin is loaded. So you may have to restart the container after the first run so that the file exists.***
+
+For example, if I wanted to enable set the cvars `sm_pugsetup_snake_captain_picks` and `sm_pugsetup_message_prefix`, I would set the following environment variables when starting the container:
+
+```bash
+  ...
+  --env "SM_PUGSETUP_SNAKE_CAPTAIN_PICKS=2" \
+  --env "SM_PUGSETUP_MESSAGE_PREFIX=[{YELLOW}Sesame Street{NORMAL}]" \
+  ...
+```
+
+This would set these values in `$CSGODIR/csgo/cfg/sourcemod/pugsetup.cfg`:
+
+```bash
+...
+sm_pugsetup_snake_captain_picks "2"
+sm_pugsetup_message_prefix "[{YELLOW}Sesame Street{NORMAL}]"
+...
 ```
 
 ### Troubleshooting
