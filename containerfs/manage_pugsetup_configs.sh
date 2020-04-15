@@ -4,7 +4,7 @@ set -ueo pipefail
 
 : "${CSGO_DIR:?'ERROR: CSGO_DIR IS NOT SET!'}"
 
-PUGSETUP_CONFIG="$CSGODIR/csgo/cfg/sourcemod/pugsetup.cfg"
+PUGSETUP_CONFIG="$CSGO_DIR/csgo/cfg/sourcemod/pugsetup/pugsetup.cfg"
 
 if [[ -f "$PUGSETUP_CONFIG" ]]; then
     # Update PugSetup cvars specified as envvars.

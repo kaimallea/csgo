@@ -210,4 +210,5 @@ If you're using a bind volume, you can copy files in directly. You may want to c
 After building:
 
 1. Edit the exported environment variables in the `Makefile` to your liking
-2. Run `make test` to start a local LAN server to test
+2. Run `make server` to start a local LAN server to test
+3. Run `make test` to run tests

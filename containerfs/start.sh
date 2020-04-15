@@ -30,7 +30,8 @@ export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
 export RETAKES="${RETAKES:-0}"
 
 # Attempt to update CSGO before starting the server
-"$STEAMCMD_DIR/steamcmd.sh" +login anonymous +force_install_dir "$CSGO_DIR" +app_update "$CSGO_APP_ID" +quit
+
+[[ -z ${CI+x} ]] && "$STEAMCMD_DIR/steamcmd.sh" +login anonymous +force_install_dir "$CSGO_DIR" +app_update "$CSGO_APP_ID" +quit
 
 # Create dynamic autoexec config
 cat << AUTOEXECCFG > "$CSGO_DIR/csgo/cfg/autoexec.cfg"
