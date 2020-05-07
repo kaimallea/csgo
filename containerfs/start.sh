@@ -28,6 +28,7 @@ export TV_ENABLE="${TV_ENABLE:-1}"
 export LAN="${LAN:-0}"
 export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
 export RETAKES="${RETAKES:-0}"
+export ANNOUNCEMENT_IP="${ANNOUNCEMENT_IP:-}"
 
 # Attempt to update CSGO before starting the server
 
@@ -97,6 +98,10 @@ fi
 
 if [[ -n $WORKSHOP_START_MAP ]]; then
   SRCDS_ARGUMENTS+=("+workshop_start_map $WORKSHOP_START_MAP")
+fi
+
+if [[ -n $ANNOUNCEMENT_IP ]]; then
+  SRCDS_ARGUMENTS+=("+net_public_adr $ANNOUNCEMENT_IP")
 fi
 
 SRCDS_RUN="$CSGO_DIR/srcds_run"
