@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-
+ 
 # These envvars should've been set by the Dockerfile
 # If they're not set then something went wrong during the build
 : "${STEAM_DIR:?'ERROR: STEAM_DIR IS NOT SET!'}"
 : "${STEAMCMD_DIR:?'ERROR: STEAMCMD_DIR IS NOT SET!'}"
 : "${CSGO_APP_ID:?'ERROR: CSGO_APP_ID IS NOT SET!'}"
 : "${CSGO_DIR:?'ERROR: CSGO_DIR IS NOT SET!'}"
-
+ 
 export SERVER_HOSTNAME="${SERVER_HOSTNAME:-Counter-Strike: Global Offensive Dedicated Server}"
 export SERVER_PASSWORD="${SERVER_PASSWORD:-}"
 export RCON_PASSWORD="${RCON_PASSWORD:-changeme}"
@@ -16,7 +16,7 @@ export IP="${IP:-0.0.0.0}"
 export PORT="${PORT:-27015}"
 export TV_PORT="${TV_PORT:-27020}"
 export TICKRATE="${TICKRATE:-128}"
-export FPS_MAX="${FPS_MAX:-300}"
+export FPS_MAX="${FPS_MAX:-400}"
 export GAME_TYPE="${GAME_TYPE:-0}"
 export GAME_MODE="${GAME_MODE:-1}"
 export MAP="${MAP:-de_dust2}"
@@ -28,6 +28,7 @@ export TV_ENABLE="${TV_ENABLE:-1}"
 export LAN="${LAN:-0}"
 export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
 export RETAKES="${RETAKES:-0}"
+export NOMASTER="${NOMASTER:-}"
 
 # Attempt to update CSGO before starting the server
 
@@ -97,6 +98,10 @@ fi
 
 if [[ -n $WORKSHOP_START_MAP ]]; then
   SRCDS_ARGUMENTS+=("+workshop_start_map $WORKSHOP_START_MAP")
+fi
+
+if [[ $NOMASTER == 1 ]]; then
+  SRCDS_ARGUMENTS+=("-nomaster")
 fi
 
 SRCDS_RUN="$CSGO_DIR/srcds_run"
