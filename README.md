@@ -49,6 +49,8 @@ If you plan on managing plugins manually with a bind volume, you might want pass
 
 The `STEAM_ACCOUNT` is a "Game Login Token" required by Valve to run public servers. Confusingly, this token is also referred to as a steam account (it's set via `sv_setsteamaccount`). To get one, visit https://steamcommunity.com/dev/managegameservers. You'll need one for each server.
 
+Remember that if you DO NOT give a valid Game Login Token, your server will be restricted to LAN only
+
 ### Optional Steam Web API Key for Workshop Content
 
 To access maps and collections from the Workshop, you need to provide a Steam Web API key. You can provide this via the evironment variable `AUTHKEY` and it will be passed to the command-line as `-authkey <key>`.
@@ -81,7 +83,7 @@ IP=0.0.0.0
 PORT=27015
 TV_PORT=27020
 TICKRATE=128
-FPS_MAX=300
+FPS_MAX=400
 GAME_TYPE=0
 GAME_MODE=1
 MAP=de_dust2
@@ -93,13 +95,14 @@ TV_ENABLE=1
 LAN=0
 SOURCEMOD_ADMINS=
 RETAKES=0
+NOMASTER=0
 ```
 
 ### PugSetup ConVars
 
 PugSetup's default configuration can also be controlled via environment variables. Any environment variables prefixed with `SM_PUGSETUP_` will have its corresponding cvar updated inside of `$CSGODIR/csgo/cfg/sourcemod/pugsetup.cfg`.
 
-**NOTE: `pugsetup.cfg` is automatically generated the first time the plugin is loaded. So you may have to restart the container after the first run so that the file exists.***
+**NOTE: `pugsetup.cfg` is automatically generated the first time the plugin is loaded. So you may have to restart the container after the first run so that the file exists.**
 
 For example, if I wanted to enable set the cvars `sm_pugsetup_snake_captain_picks` and `sm_pugsetup_message_prefix`, I would set the following environment variables when starting the container:
 
