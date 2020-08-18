@@ -63,11 +63,18 @@ writeid
 writeip
 SERVERCFG
 
+
+if [[ $SOURCEMOD == 1 ]]; then
 # Install and configure plugins & extensions
 "$BASH" "$STEAM_DIR/manage_plugins.sh"
 
 # Update PugSetup configuration via environment variables
 "$BASH" "$STEAM_DIR/manage_pugsetup_configs.sh"
+fi
+
+if [[ $RETAKE == 1 ]]; then
+SOURCEMOD=1
+fi
 
 SRCDS_ARGUMENTS=(
   "-console"

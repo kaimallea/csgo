@@ -28,6 +28,7 @@ services:
       MAXPLAYERS: 12
       TV_ENABLE: 1
       LAN: 0
+      SOURCEMOD: 1
       RETAKES: 0
 
     volumes:
