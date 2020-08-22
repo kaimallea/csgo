@@ -14,6 +14,7 @@ spec:
       labels:
         app: csgo
     spec:
+      restart_policy: Always
       containers:
       - name: csgo-server
         tty: true
