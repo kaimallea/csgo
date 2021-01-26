@@ -35,6 +35,7 @@ export NOMASTER="${NOMASTER:-}"
 [[ -z ${CI+x} ]] && "$STEAMCMD_DIR/steamcmd.sh" +login anonymous +force_install_dir "$CSGO_DIR" +app_update "$CSGO_APP_ID" +quit
 
 # Create dynamic autoexec config
+if [ ! "$CSGO_DIR/csgo/cfg/autoexec.cfg" ]; then
 cat << AUTOEXECCFG > "$CSGO_DIR/csgo/cfg/autoexec.cfg"
 log on
 hostname "$SERVER_HOSTNAME"
@@ -45,7 +46,15 @@ exec banned_user.cfg
 exec banned_ip.cfg
 AUTOEXECCFG
 
+else
+sed -i -n 's/^hostname.*/hostname "$SERVER_HOSTNAME"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i -n 's/^rcon_password.*/rcon_password "$RCON_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i -n 's/^sv_password.*/sv_password "$SERVER_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+
+fi
 # Create dynamic server config
+
+if [ ! -f "$CSGO_DIR/csgo/cfg/server.cfg" ]; then
 cat << SERVERCFG > "$CSGO_DIR/csgo/cfg/server.cfg"
 tv_enable $TV_ENABLE
 tv_delaymapchange 1
@@ -63,6 +72,10 @@ writeid
 writeip
 SERVERCFG
 
+else
+sed -i -n 's/^tv_enabe.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
+
+fi
 
 if [[ $SOURCEMOD == 1 ]]; then
 # Install and configure plugins & extensions
