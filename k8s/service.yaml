@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: csgo-server-udp
+spec:
+  selector:
+    app: csgo
+  ports:
+    - protocol: UDP
+      port: 27015
+      targetPort: 27015
+  type: NodePort
+  # loadBalancerIP: x.x.x.x
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: csgo-server-tcp
+spec:
+  selector:
+    app: csgo
+  ports:
+    - protocol: TCP
+      port: 27015
+      targetPort: 27015
+  type: NodePort
+  # loadBalancerIP: x.x.x.x 
+
+# You can also use type LoadBalancer, but then you need to make sure that the loadbalancer used accually support mixed protocols. This works on metallb, but you need to specify the same loadbalancerIP on both services.

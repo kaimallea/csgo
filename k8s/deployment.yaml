@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csgo-deployment
+  labels:
+    app: csgo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csgo
+  template:
+    metadata:
+      labels:
+        app: csgo
+    spec:
+      restart_policy: Always
+      containers:
+      - name: csgo-server
+        tty: true
+        stdin: true
+        image: kmallea/csgo
+        ports:
+        - name: tcp
+          containerPort: 27015
+          protocol: UDP
+        - name: udp
+          containerPort: 27015
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: csgo-env 

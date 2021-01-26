@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: csgo-env
+data:
+  SERVER_HOSTNAME: '"Counter-Strike: Global Offensive Dedicated Server"'
+  SERVER_PASSWORD: 'changeme'
+  RCON_PASSWORD: 'changeme'
+  STEAM_ACCOUNT: 'changeme'
+  AUTHKEY: 'changeme'
+  IP: '0.0.0.0'
+  PORT: '27015'
+  TV_PORT: '27020'
+  TICKRATE: '128'
+  FPS_MAX: '400'
+  GAME_TYPE: '0'
+  GAME_MODE: '1'
+  MAP: 'de_dust2'
+  MAPGROUP: 'mg_active'
+  HOST_WORKSHOP_COLLECTION: '' 
+  WORKSHOP_START_MAP: ''
+  MAXPLAYERS: '12'
+  TV_ENABLE: '1'
+  LAN: '0'
+  SOURCEMOD_ADMINS: ''
+  RETAKES: '0'
+  NOMASTER: '0'
