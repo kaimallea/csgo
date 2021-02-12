@@ -74,7 +74,7 @@ writeip
 SERVERCFG
 
 else
-sed -i -n 's/^tv_enabe.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
+sed -i -n 's/^tv_enable.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
 
 fi
 
