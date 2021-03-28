@@ -62,6 +62,11 @@ tv_timeout 60
 tv_transmitall 1
 writeid
 writeip
+sv_maxrate 0
+sv_minrate 80000
+sv_mincmdrate $TICKRATE
+sv_maxupdaterate $TICKRATE
+sv_minupdaterate $TICKRATE
 SERVERCFG
 
 # Install and configure plugins & extensions
