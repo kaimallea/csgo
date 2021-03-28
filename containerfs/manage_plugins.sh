@@ -38,9 +38,20 @@ create_install_marker() {
   echo "$1" > "$CSGO_DIR/csgo/$(get_checksum_from_string "$1").marker"
 }
 
+file_url_exists() {
+  if curl --output /dev/null --silent --head --fail "$1"; then
+    return 0
+  fi
+  return 1
+}
+
 install_plugin() {
   filename=${1##*/}
   filename_ext=$(echo "${1##*.}" | awk '{print tolower($0)}')
+  if ! file_url_exists "$1"; then
+    echo "Plugin download check FAILED for $filename";
+    return 0
+  fi
   if ! is_plugin_installed "$1"; then
     echo "Downloading $1..."
     case "$filename_ext" in
