@@ -31,12 +31,11 @@ export RETAKES="${RETAKES:-0}"
 export ANNOUNCEMENT_IP="${ANNOUNCEMENT_IP:-}"
 export NOMASTER="${NOMASTER:-}"
 
-# Attempt to update CSGO before starting the server
-
-[[ -z ${CI+x} ]] && "$STEAMCMD_DIR/steamcmd.sh" +login anonymous +force_install_dir "$CSGO_DIR" +app_update "$CSGO_APP_ID" +quit
 
 # Create dynamic autoexec config
-if [ ! "$CSGO_DIR/csgo/cfg/autoexec.cfg" ]; then
+mkdir -p "$CSGO_DIR/csgo/cfg"
+
+if [ ! -f "$CSGO_DIR/csgo/cfg/autoexec.cfg" ]; then
 cat << AUTOEXECCFG > "$CSGO_DIR/csgo/cfg/autoexec.cfg"
 log on
 hostname "$SERVER_HOSTNAME"
@@ -53,8 +52,8 @@ sed -i -n 's/^rcon_password.*/rcon_password "$RCON_PASSWORD"/' $CSGO_DIR/csgo/cf
 sed -i -n 's/^sv_password.*/sv_password "$SERVER_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
 
 fi
-# Create dynamic server config
 
+# Create dynamic server config
 if [ ! -f "$CSGO_DIR/csgo/cfg/server.cfg" ]; then
 cat << SERVERCFG > "$CSGO_DIR/csgo/cfg/server.cfg"
 tv_enable $TV_ENABLE
@@ -80,6 +79,9 @@ else
 sed -i -n 's/^tv_enable.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
 
 fi
+
+# Attempt to update CSGO before starting the server
+[[ -z ${CI+x} ]] && "$STEAMCMD_DIR/steamcmd.sh" +login anonymous +force_install_dir "$CSGO_DIR" +app_update "$CSGO_APP_ID" +quit
 
 # Install and configure plugins & extensions
 "$BASH" "$STEAM_DIR/manage_plugins.sh"
