@@ -35,7 +35,7 @@ export NOMASTER="${NOMASTER:-}"
 # Create dynamic autoexec config
 mkdir -p "$CSGO_DIR/csgo/cfg"
 
-if [ ! -f "$CSGO_DIR/csgo/cfg/autoexec.cfg" ]; then
+if [ ! -s "$CSGO_DIR/csgo/cfg/autoexec.cfg" ]; then
 cat << AUTOEXECCFG > "$CSGO_DIR/csgo/cfg/autoexec.cfg"
 log on
 hostname "$SERVER_HOSTNAME"
@@ -47,14 +47,14 @@ exec banned_ip.cfg
 AUTOEXECCFG
 
 else
-sed -i -n 's/^hostname.*/hostname "$SERVER_HOSTNAME"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
-sed -i -n 's/^rcon_password.*/rcon_password "$RCON_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
-sed -i -n 's/^sv_password.*/sv_password "$SERVER_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i 's/^hostname.*/hostname "$SERVER_HOSTNAME"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i 's/^rcon_password.*/rcon_password "$RCON_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i 's/^sv_password.*/sv_password "$SERVER_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
 
 fi
 
 # Create dynamic server config
-if [ ! -f "$CSGO_DIR/csgo/cfg/server.cfg" ]; then
+if [ ! -s "$CSGO_DIR/csgo/cfg/server.cfg" ]; then
 cat << SERVERCFG > "$CSGO_DIR/csgo/cfg/server.cfg"
 tv_enable $TV_ENABLE
 tv_delaymapchange 1
@@ -76,7 +76,7 @@ sv_minupdaterate $TICKRATE
 SERVERCFG
 
 else
-sed -i -n 's/^tv_enable.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
+sed -i 's/^tv_enable.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
 
 fi
 
