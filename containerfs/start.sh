@@ -6,13 +6,36 @@
 : "${STEAMCMD_DIR:?'ERROR: STEAMCMD_DIR IS NOT SET!'}"
 : "${CSGO_APP_ID:?'ERROR: CSGO_APP_ID IS NOT SET!'}"
 : "${CSGO_DIR:?'ERROR: CSGO_DIR IS NOT SET!'}"
- 
+
+# set_env_from_file_or_def VAR [DEFAULT]
+# e.g. set_env_from_file_or_def 'RCON_PASSWORD' 'test'
+# Fills $VAR either with the content of the file with the name $VAR_FILE
+# or with DEFAULT. 
+# If $VAR is already set nothing will be changed
+# If both $VAR and $VAR_FILE are set $VAR will keep its value and content
+# of $VAR_FILE will be ignored.
+function set_env_from_file_or_def() {
+	local VAR="$1"
+	local FILEVAR="${VAR}_FILE"
+	local DEFAULTVAL="${2:-}"
+	local RETURNVAL="$DEFAULTVAL"
+
+	if [ "${!VAR:-}" ]; then
+		RETURNVAL="${!VAR}"
+	elif [ "${!FILEVAR:-}" ]; then
+		RETURNVAL="$(< "${!FILEVAR}")"
+	fi
+
+	export "$VAR"="$RETURNVAL"
+	unset "$FILEVAR"
+}
+
 export SERVER_HOSTNAME="${SERVER_HOSTNAME:-Counter-Strike: Global Offensive Dedicated Server}"
-export SERVER_PASSWORD="${SERVER_PASSWORD:-}"
-export RCON_PASSWORD="${RCON_PASSWORD:-changeme}"
-export STEAM_ACCOUNT="${STEAM_ACCOUNT:-changeme}"
-export AUTHKEY="${AUTHKEY:-changeme}"
-export IP="${IP:-0.0.0.0}"
+set_env_from_file_or_def 'SERVER_PASSWORD'
+set_env_from_file_or_def 'RCON_PASSWORD' 'changeme'
+set_env_from_file_or_def 'STEAM_ACCOUNT' 'changeme'
+set_env_from_file_or_def 'AUTHKEY' 'changeme'
+set_env_from_file_or_def 'IP' '0.0.0.0'
 export PORT="${PORT:-27015}"
 export TV_PORT="${TV_PORT:-27020}"
 export TICKRATE="${TICKRATE:-128}"
@@ -26,7 +49,7 @@ export WORKSHOP_START_MAP="${WORKSHOP_START_MAP:-}"
 export MAXPLAYERS="${MAXPLAYERS:-12}"
 export TV_ENABLE="${TV_ENABLE:-1}"
 export LAN="${LAN:-0}"
-export SOURCEMOD_ADMINS="${SOURCEMOD_ADMINS:-}"
+set_env_from_file_or_def 'SOURCEMOD_ADMINS'
 export RETAKES="${RETAKES:-0}"
 export ANNOUNCEMENT_IP="${ANNOUNCEMENT_IP:-}"
 export NOMASTER="${NOMASTER:-}"

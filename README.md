@@ -98,6 +98,37 @@ RETAKES=0
 NOMASTER=0
 ```
 
+For compatibility with the [Docker secrets](https://docs.docker.com/engine/swarm/secrets/) feature the following 
+environment variables are also available as a '_FILE' variant.
+
+```bash
+SERVER_PASSWORD_FILE
+RCON_PASSWORD_FILE
+STEAM_ACCOUNT_FILE
+AUTHKEY_FILE
+SOURCEMOD_ADMINS_FILE
+```
+
+If one of these is set the content of the referred file is used as content for the non-'_FILE" environment variable. If both
+environment variables are set, the content of the non-'_FILE' variable takes precedence.
+
+Usage of _FILE variables allows constructs like this in docker compose files:
+
+```yml
+version: "3.7"
+services:
+  app:
+    image: kmallea/csgo
+    secrets:
+      - csgo_rcon_password
+    environment:
+      - RCON_PASSWORD_FILE=/run/secrets/csgo_rcon_password
+
+secrets:
+  csgo_rcon_password:
+    file: ${SECRETS_DIR}/csgo_rcon_password.txt
+```
+
 ### PugSetup ConVars
 
 PugSetup's default configuration can also be controlled via environment variables. Any environment variables prefixed with `SM_PUGSETUP_` will have its corresponding cvar updated inside of `$CSGODIR/csgo/cfg/sourcemod/pugsetup.cfg`.
