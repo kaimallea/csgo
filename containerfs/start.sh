@@ -70,9 +70,9 @@ exec banned_ip.cfg
 AUTOEXECCFG
 
 else
-sed -i 's/^hostname.*/hostname "$SERVER_HOSTNAME"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
-sed -i 's/^rcon_password.*/rcon_password "$RCON_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
-sed -i 's/^sv_password.*/sv_password "$SERVER_PASSWORD"/' $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i "s/^hostname.*/hostname \"$SERVER_HOSTNAME\"/" $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i "s/^rcon_password.*/rcon_password \"$RCON_PASSWORD\"/" $CSGO_DIR/csgo/cfg/autoexec.cfg
+sed -i "s/^sv_password.*/sv_password \"$SERVER_PASSWORD\"/" $CSGO_DIR/csgo/cfg/autoexec.cfg
 
 fi
 
@@ -99,7 +99,7 @@ sv_minupdaterate $TICKRATE
 SERVERCFG
 
 else
-sed -i 's/^tv_enable.*/tv_enable $TV_ENABLE/' $CSGO_DIR/csgo/cfg/server.cfg
+sed -i "s/^tv_enable.*/tv_enable $TV_ENABLE/" $CSGO_DIR/csgo/cfg/server.cfg
 
 fi
 
