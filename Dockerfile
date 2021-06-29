@@ -16,6 +16,7 @@ RUN set -xo pipefail \
       && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --no-install-suggests -y \
           lib32gcc1 \
           lib32stdc++6 \
+          lib32z1 \
           ca-certificates \
           net-tools \
           locales \
