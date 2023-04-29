@@ -6,15 +6,15 @@ set -ueo pipefail
 
 export RETAKES="${RETAKES:-0}"
 
-INSTALL_PLUGINS="${INSTALL_PLUGINS:-https://mms.alliedmods.net/mmsdrop/1.10/mmsource-1.10.7-git971-linux.tar.gz
-https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6478-linux.tar.gz
+INSTALL_PLUGINS="${INSTALL_PLUGINS:-https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1148-linux.tar.gz
+https://sm.alliedmods.net/smdrop/1.11/sourcemod-1.11.0-git6934-linux.tar.gz
 http://users.alliedmods.net/~kyles/builds/SteamWorks/SteamWorks-git131-linux.tar.gz
 https://bitbucket.org/GoD_Tony/updater/downloads/updater.smx
-https://github.com/splewis/csgo-practice-mode/releases/download/1.3.3/practicemode_1.3.3.zip
-https://github.com/splewis/csgo-pug-setup/releases/download/2.0.5/pugsetup_2.0.5.zip
+https://github.com/splewis/csgo-practice-mode/releases/download/1.3.4/practicemode_1.3.4.zip
+https://github.com/splewis/csgo-pug-setup/releases/download/2.0.7/pugsetup_2.0.7.zip
 https://github.com/splewis/csgo-retakes/releases/download/v0.3.4/retakes_0.3.4.zip
-https://github.com/b3none/retakes-instadefuse/releases/download/1.4.0/retakes-instadefuse.smx
-https://github.com/b3none/retakes-autoplant/releases/download/2.3.0/retakes_autoplant.smx
+https://github.com/B3none/retakes-instadefuse/releases/download/1.5.0/retakes-instadefuse.smx
+https://github.com/B3none/retakes-autoplant/releases/download/2.3.3/retakes-autoplant.smx
 https://github.com/b3none/retakes-hud/releases/download/2.2.5/retakes-hud.smx
 }"
 
