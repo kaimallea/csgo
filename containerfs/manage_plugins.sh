@@ -99,7 +99,7 @@ done
 
 PLUGINS_ENABLED_DIR="$CSGO_DIR/csgo/addons/sourcemod/plugins"
 PLUGINS_DISABLED_DIR="$CSGO_DIR/csgo/addons/sourcemod/plugins/disabled"
-RETAKES_PLUGINS="retakes.smx retakes-instadefuse.smx retakes_autoplant.smx retakes-hud.smx retakes_standardallocator.smx"
+RETAKES_PLUGINS="retakes.smx retakes-instadefuse.smx retakes-autoplant.smx retakes-hud.smx retakes_standardallocator.smx"
 PUGSETUP_PLUGINS="pugsetup.smx pugsetup_teamnames.smx pugsetup_damageprint.smx"
 
 # Disable Retakes by default so that we have a working and predictable state without plugins conflict
