@@ -20,6 +20,7 @@ services:
       PORT: 27015
       TV_PORT: 27020
       TICKRATE: 128
+      THREADS: 1
       FPS_MAX: 300
       GAME_TYPE: 0
       GAME_MODE: 1

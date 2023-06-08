@@ -11,6 +11,7 @@ IP ?= 0.0.0.0
 PORT ?= 27015
 TV_PORT ?= 27020
 TICKRATE ?= 128
+THREADS ?= 1
 FPS_MAX ?= 400
 GAME_TYPE ?= 0
 GAME_MODE ?= 1
@@ -50,6 +51,7 @@ server:
 		-e "STEAM_ACCOUNT=$(STEAM_ACCOUNT)" \
 		-e "AUTHKEY=$(AUTHKEY)" \
 		-e "TICKRATE=$(TICKRATE)" \
+		-e "THREADS=$(THREADS)" \
 		-e "FPS_MAX=$(FPS_MAX)" \
 		-e "GAME_TYPE=$(GAME_TYPE)" \
 		-e "GAME_MODE=$(GAME_MODE)" \
@@ -79,6 +81,7 @@ test:
 		-e "STEAM_ACCOUNT=$(STEAM_ACCOUNT)" \
 		-e "AUTHKEY=$(AUTHKEY)" \
 		-e "TICKRATE=$(TICKRATE)" \
+		-e "THREADS=$(THREADS)" \
 		-e "FPS_MAX=$(FPS_MAX)" \
 		-e "GAME_TYPE=$(GAME_TYPE)" \
 		-e "GAME_MODE=$(GAME_MODE)" \
